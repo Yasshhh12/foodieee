@@ -3,28 +3,40 @@ import datas from './Data.json'
 
 const Learn = () => {
 
-  const [name,setName] = useState("");
-  const [email,setEmail] = useState("");
+  const [formData,setFormData] = useState({
+    name:'',
+    email:'',
+    password:''
+  })
 
-  const handleName = (e) =>{
-    setName(e.target.value); 
-  } 
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    console.log(formData);
+  }
 
-  const handleEmail = (e) =>{
-    setEmail(e.target.value); 
-  } 
+  const handleInput = (e) =>{
+    const {name,value} = e.target;
+
+    setFormData({...formData,[name]:value})
+  }
   
   return (
-    <div>
-
-    <label>
-        Name:<input type="text" value={name} className='border border-black' onChange={handleName} />
-        <br/>
-        Email:<input type="email" value={email} className='border border-black' onChange={handleEmail}/>
-    </label>
-
-
-    </div>
+    
+    <form onSubmit={handleSubmit}>
+      <label>
+        Name:<input type='text' name='name' value={formData.name} onChange={handleInput} className='border border-black mb-5'/>
+      </label>
+      <br/>
+      <label>
+        Email:<input type='email' name='email' value={formData.email} onChange={handleInput} className='border border-black mb-5'/>
+      </label>
+      <br/>
+      <label>
+        Password:<input type='password' name='password' value={formData.password} onChange={handleInput} className='border border-black mb-5'/>
+      </label>
+      <br/>
+      <button className='border border-black'>Submit</button>
+    </form>
         
     
   )
