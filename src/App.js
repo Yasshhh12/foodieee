@@ -1,17 +1,14 @@
-
-import './App.scss';
-import { Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout';
+import React from 'react'
+import Learn from './components/Learn.jsx'
 
 
-function App() {
+
+const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Layout />}/>
-      </Routes>
-    </>
-  );
+    <div className='text-2xl text-center flex items-center justify-center h-screen'>
+     <Learn /> 
+    </div>
+  )
 }
 
-export default App;
+export default App
