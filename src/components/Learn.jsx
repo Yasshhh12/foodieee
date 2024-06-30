@@ -1,42 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import datas from './Data.json'
 
 const Learn = () => {
 
-  const [formData,setFormData] = useState({
-    name:'',
-    email:'',
-    password:''
-  })
+  const [users,setUsers] = useState([]);
 
-  const handleSubmit = (e) =>{
-    e.preventDefault();
-    console.log(formData);
-  }
+  useEffect(()=>{
+    async function fetchUsers(){
+      try{
+        const response = await fetch('https://api.github.com/users');
 
-  const handleInput = (e) =>{
-    const {name,value} = e.target;
+        const data = await response.json();
+        setUsers(data);
 
-    setFormData({...formData,[name]:value})
-  }
+      }
+      catch{
+        console.log("Error");
+
+      }
+    }
+
+  },[]);
+  
   
   return (
     
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:<input type='text' name='name' value={formData.name} onChange={handleInput} className='border border-black mb-5'/>
-      </label>
-      <br/>
-      <label>
-        Email:<input type='email' name='email' value={formData.email} onChange={handleInput} className='border border-black mb-5'/>
-      </label>
-      <br/>
-      <label>
-        Password:<input type='password' name='password' value={formData.password} onChange={handleInput} className='border border-black mb-5'/>
-      </label>
-      <br/>
-      <button className='border border-black'>Submit</button>
-    </form>
+    <div>
+      <h1>Users list</h1>
+      <ul>
+        {
+          users.map(user => {
+            return <li key={user.id}><a href={user.html_url}>{user.login}</a></li>
+          })
+        }
+      </ul>
+    </div>
+    
         
     
   )
