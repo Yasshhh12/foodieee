@@ -1,43 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import datas from './Data.json'
+import React, { useEffect, useState } from 'react'
+import data from './Data'
 
 const Learn = () => {
+  const [selected, setSelected] = useState(null)
 
-  const [users,setUsers] = useState([]);
+  const handleClickEvent = (setCurrentId) => {
+    setSelected(setCurrentId === selected ? null : setCurrentId)
+  }
 
-  useEffect(()=>{
-    async function fetchUsers(){
-      try{
-        const response = await fetch('https://api.github.com/users');
-
-        const data = await response.json();
-        setUsers(data);
-
-      }
-      catch{
-        console.log("Error");
-
-      }
-    }
-
-  },[]);
-  
-  
   return (
-    
     <div>
-      <h1>Users list</h1>
-      <ul>
-        {
-          users.map(user => {
-            return <li key={user.id}><a href={user.html_url}>{user.login}</a></li>
-          })
-        }
-      </ul>
+      <h1>Accordian</h1>
+      <div>
+        {data.map((dataItem, index) => (
+          <div>
+            <div key={index}>
+              <h2 onClick={() => handleClickEvent(dataItem.id)}>
+                {dataItem.question}
+              </h2>
+              <span>+</span>
+            </div>
+            <div>
+              {selected == dataItem.id ? <div>{dataItem.answer}</div> : null}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-    
-        
-    
   )
 }
 
